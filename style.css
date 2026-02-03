@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap');
 
+/* =========================
+   Global reset & base
+   ========================= */
+
 * {
   box-sizing: border-box;
 }
@@ -9,11 +13,12 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   background: radial-gradient(circle at top, #1b1b1b, #0f0f0f 60%);
   color: #e4e1db;
+  overflow-x: hidden;
 }
 
-header {
-  padding: 3rem 2rem 1rem;
-}
+/* =========================
+   Typography
+   ========================= */
 
 h1 {
   font-size: 2.1rem;
@@ -22,25 +27,56 @@ h1 {
   letter-spacing: 0.05em;
 }
 
-.subtitle {
-  font-size: 0.8rem;
-  opacity: 0.55;
-  margin-top: 0.4rem;
+h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  opacity: 0.85;
 }
 
-main {
-  padding: 2rem;
-}
-
-.intro {
-  max-width: 440px;
+p {
   font-size: 0.8rem;
   line-height: 1.7;
-  margin-bottom: 4rem;
   opacity: 0.75;
+  max-width: 520px;
 }
 
+/* =========================
+   Layout
+   ========================= */
+
+header {
+  padding: 3rem 2rem 2rem;
+}
+
+section {
+  padding: 3rem 2rem 4rem;
+}
+
+footer {
+  padding: 4rem 2rem;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+/* =========================
+   Links
+   ========================= */
+
+footer a {
+  color: #bfa76f;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(191,167,111,0.4);
+}
+
+/* =========================
+   Gallery grid
+   ========================= */
+
 .gallery {
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 2.2rem;
@@ -51,29 +87,25 @@ main {
   display: block;
   background: #111;
   padding: 0.4rem;
+  cursor: pointer;
+
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.03),
     0 10px 30px rgba(0,0,0,0.6);
+
   filter: contrast(1.05) brightness(0.92);
+  transition: filter 0.25s ease, transform 0.25s ease;
 }
 
 .gallery img:hover {
   filter: contrast(1.1) brightness(1);
+  transform: translateY(-2px);
 }
 
-footer {
-  padding: 4rem 2rem;
-  font-size: 0.7rem;
-  opacity: 0.5;
-}
+/* =========================
+   Fullscreen image reveal
+   ========================= */
 
-footer a {
-  color: #bfa76f;
-  text-decoration: none;
-  border-bottom: 1px dotted rgba(191,167,111,0.4);
-}
-
-/* fullscreen image reveal */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -81,9 +113,11 @@ footer a {
   display: flex;
   align-items: center;
   justify-content: center;
+
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s ease;
+
   z-index: 900;
 }
 
@@ -98,15 +132,20 @@ footer a {
   box-shadow: 0 0 80px rgba(0,0,0,0.9);
 }
 
-/* film grain overlay */
+/* =========================
+   Film grain overlay
+   ========================= */
+
 .grain {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 999;
+
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   opacity: 0.08;
   mix-blend-mode: overlay;
+
   animation: grainShift 6s steps(1) infinite;
 }
 
