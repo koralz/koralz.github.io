@@ -5,6 +5,34 @@
   <title>Koralz Archive</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+  
+  <div class="lightbox" id="lightbox">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const images = document.querySelectorAll('.gallery img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  images.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      lightbox.classList.remove('active');
+    }
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+</script>
+
 <body>
   <header>
     <h1>Koralz</h1>
