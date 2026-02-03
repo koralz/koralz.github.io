@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  background: radial-gradient(circle at top, #1b1b1b, #0f0f0f 60%);
+  color: #e4e1db;
+}
+
+header {
+  padding: 3rem 2rem 1rem;
+}
+
+h1 {
+  font-size: 2.1rem;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  opacity: 0.55;
+  margin-top: 0.4rem;
+}
+
+main {
+  padding: 2rem;
+}
+
+.intro {
+  max-width: 440px;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  margin-bottom: 4rem;
+  opacity: 0.75;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2.2rem;
+}
+
+.gallery img {
+  width: 100%;
+  display: block;
+  background: #111;
+  padding: 0.4rem;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03),
+    0 10px 30px rgba(0,0,0,0.6);
+  filter: contrast(1.05) brightness(0.92);
+}
+
+.gallery img:hover {
+  filter: contrast(1.1) brightness(1);
+}
+
+footer {
+  padding: 4rem 2rem;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+footer a {
+  color: #bfa76f;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(191,167,111,0.4);
+}
