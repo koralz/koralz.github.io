@@ -72,3 +72,39 @@ footer a {
   text-decoration: none;
   border-bottom: 1px dotted rgba(191,167,111,0.4);
 }
+
+/* fullscreen image reveal */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 900;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox img {
+  max-width: 92vw;
+  max-height: 92vh;
+  box-shadow: 0 0 80px rgba(0,0,0,0.9);
+}
+
+/* film grain overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
