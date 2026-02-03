@@ -5,43 +5,18 @@
   <title>Koralz Archive</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-  
-  <div class="lightbox" id="lightbox">
-  <img id="lightbox-img" src="" alt="">
-</div>
-
-<script>
-  const images = document.querySelectorAll('.gallery img');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-
-  images.forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightbox.classList.add('active');
-    });
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      lightbox.classList.remove('active');
-    }
-  });
-
-  lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-  });
-</script>
 
 <body>
+  <!-- film grain overlay -->
   <div class="grain"></div>
-</body>
-  
+
+  <!-- header -->
   <header>
     <h1>Koralz</h1>
     <p>This is my photography portfolio</p>
   </header>
 
+  <!-- intro sections -->
   <section>
     <h2>Nature</h2>
     <p>
@@ -55,19 +30,57 @@
       City life from multiple cities around the world.
     </p>
   </section>
-  
+
   <section>
     <h2>People</h2>
     <p>
       Anything and everything people.
     </p>
   </section>
-  
+
+  <!-- GALLERY: THIS IS WHERE IMAGES GO -->
+  <section class="gallery">
+    <img src="images/DSCF0009.jpeg" alt="">
+    <img src="images/DSCF0071.jpeg" alt="">
+    <img src="images/DSCF0087.jpeg" alt="">
+  </section>
+
+  <!-- footer -->
   <footer>
     <p>
       <a href="https://github.com/koralz">GitHub</a> |
-      <a href="jabroncopeland431@gmail.com">Email</a>
+      <a href="mailto:jabroncopeland431@gmail.com">Email</a>
     </p>
   </footer>
+
+  <!-- fullscreen lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- lightbox script (MUST be at bottom) -->
+  <script>
+    const images = document.querySelectorAll('.gallery img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('active');
+      }
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+  </script>
+
 </body>
 </html>
