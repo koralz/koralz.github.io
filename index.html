@@ -13,32 +13,29 @@
   <main class="folders">
 
     <div class="folder" data-folder="people">
-      <img src="icons/folder.png" alt="">
+      <img src="icons/folder.svg" alt="">
       <span>People</span>
     </div>
 
     <div class="folder" data-folder="nature">
-      <img src="icons/folder.png" alt="">
+      <img src="icons/folder.svg" alt="">
       <span>Nature</span>
     </div>
 
     <div class="folder" data-folder="cities">
-      <img src="icons/folder.png" alt="">
+      <img src="icons/folder.svg" alt="">
       <span>Cities</span>
     </div>
 
   </main>
 
-  <!-- fullscreen viewer -->
-  <div class="viewer" id="viewer">
-    <img id="viewer-img" src="" alt="">
-  </div>
+  <!-- fullscreen photo pile viewer -->
+  <div class="viewer" id="viewer"></div>
 
-  <!-- archive script -->
+  <!-- pile script -->
   <script>
     const folders = document.querySelectorAll('.folder');
     const viewer = document.getElementById('viewer');
-    const viewerImg = document.getElementById('viewer-img');
 
     const archive = {
       people: [
@@ -56,23 +53,80 @@
       ]
     };
 
+    let currentPile = [];
+    let topIndex = 0;
+
+    // Utility: generate small random rotation and offset
+    function randomTransform() {
+      const rotate = Math.random() * 10 - 5; // -5° to 5°
+      const x = Math.random() * 30 - 15; // -15px to 15px
+      const y = Math.random() * 30 - 15;
+      return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+    }
+
+    // Open folder
     folders.forEach(folder => {
       folder.addEventListener('click', () => {
         const key = folder.dataset.folder;
-        viewerImg.src = archive[key][0];
+        viewer.innerHTML = ''; // clear previous pile
+        currentPile = archive[key].map(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.style.transform = randomTransform();
+          img.style.position = 'absolute';
+          img.style.top = '50%';
+          img.style.left = '50%';
+          img.style.transformOrigin = 'center center';
+          img.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+          img.style.maxWidth = '90vw';
+          img.style.maxHeight = '90vh';
+          img.style.cursor = 'grab';
+          img.style.opacity = '0.95';
+          viewer.appendChild(img);
+          return img;
+        });
+        topIndex = 0;
+        // bring top image to front
+        updatePile();
         viewer.classList.add('active');
       });
     });
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        viewer.classList.remove('active');
+    // Update z-index so top image is interactive
+    function updatePile() {
+      currentPile.forEach((img, i) => {
+        img.style.zIndex = i;
+        img.style.opacity = (i === topIndex) ? '1' : '0.85';
+        img.style.transform = (i === topIndex) ? 'translate(0,0) rotate(0deg)' : img.style.transform;
+      });
+    }
+
+    // Scroll wheel flips through photos
+    viewer.addEventListener('wheel', e => {
+      if (!currentPile.length) return;
+      if (e.deltaY > 0) {
+        // next image
+        topIndex = (topIndex + 1) % currentPile.length;
+      } else {
+        // previous image
+        topIndex = (topIndex - 1 + currentPile.length) % currentPile.length;
       }
+      updatePile();
+      e.preventDefault();
     });
 
-    viewer.addEventListener('click', () => {
+    // Exit pile
+    function closeViewer() {
       viewer.classList.remove('active');
+      viewer.innerHTML = '';
+      currentPile = [];
+    }
+
+    viewer.addEventListener('click', closeViewer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeViewer();
     });
   </script>
 
 </body>
+
