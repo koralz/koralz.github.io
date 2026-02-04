@@ -1,95 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Koralz Archive</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-
 <body>
 
   <!-- film grain overlay -->
   <div class="grain"></div>
 
-  <!-- header -->
+  <!-- archive header -->
   <header>
     <h1>Koralz</h1>
-    <p>This is my photography portfolio</p>
+    <p>personal archive</p>
   </header>
 
-  <!-- Nature -->
-  <section>
-    <h2>Nature</h2>
-    <p>
-      Mostly landscapes, plants I found cool, bodies of water, animal activity, etc.
-    </p>
+  <!-- folder view -->
+  <main class="folders">
 
-    <div class="gallery">
-      <img src="images/DSCF0178.jpeg" alt="">
-      <img src="images/DSCF0181.jpeg" alt="">
-      <img src="images/DSCF0186.jpeg" alt="">
+    <div class="folder" data-folder="people">
+      <img src="icons/folder.svg" alt="">
+      <span>People</span>
     </div>
-  </section>
 
-  <!-- City Life -->
-  <section>
-    <h2>City Life</h2>
-    <p>
-      City life from multiple cities around the world.
-    </p>
-
-    <div class="gallery">
-      <img src="images/DSCF0009.jpeg" alt=""> 
-      <img src="images/DSCF0071.jpeg" alt=""> 
-      <img src="images/DSCF0087.jpeg" alt="">
+    <div class="folder" data-folder="nature">
+      <img src="icons/folder.svg" alt="">
+      <span>Nature</span>
     </div>
-  </section>
 
-  <!-- People -->
-  <section>
-    <h2>People</h2>
-    <p>
-      Anything and everything people.
-    </p>
-    
-  </section>
+    <div class="folder" data-folder="cities">
+      <img src="icons/folder.svg" alt="">
+      <span>Cities</span>
+    </div>
 
-  <!-- footer -->
-  <footer>
-    <p>
-      <a href="https://www.instagram.com/_koralz">Instagram</a> |
-      <a href="mailto:jabroncopeland431@gmail.com">Email</a>
-    </p>
-  </footer>
+  </main>
 
-  <!-- fullscreen lightbox -->
-  <div class="lightbox" id="lightbox">
-    <img id="lightbox-img" src="" alt="">
+  <!-- fullscreen viewer -->
+  <div class="viewer" id="viewer">
+    <img id="viewer-img" src="" alt="">
   </div>
 
-  <!-- lightbox script (MUST be at bottom) -->
+  <!-- archive script -->
   <script>
-    const images = document.querySelectorAll('.gallery img');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
+    const folders = document.querySelectorAll('.folder');
+    const viewer = document.getElementById('viewer');
+    const viewerImg = document.getElementById('viewer-img');
 
-    images.forEach(img => {
-      img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightbox.classList.add('active');
+    const archive = {
+      people: [
+        'images/people1.jpg',
+        'images/people2.jpg'
+      ],
+      nature: [
+        'images/nature1.jpg',
+        'images/nature2.jpg'
+      ],
+      cities: [
+        'images/DSCF0009.jpeg',
+        'images/DSCF0071.jpeg',
+        'images/DSCF0087.jpeg'
+      ]
+    };
+
+    folders.forEach(folder => {
+      folder.addEventListener('click', () => {
+        const key = folder.dataset.folder;
+        viewerImg.src = archive[key][0];
+        viewer.classList.add('active');
       });
     });
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
-        lightbox.classList.remove('active');
+        viewer.classList.remove('active');
       }
     });
 
-    lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('active');
+    viewer.addEventListener('click', () => {
+      viewer.classList.remove('active');
     });
   </script>
 
 </body>
-</html>
