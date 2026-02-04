@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Koralz Archive</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
 <body>
 
   <!-- film grain overlay -->
@@ -56,12 +64,25 @@
     let currentPile = [];
     let topIndex = 0;
 
-    // Utility: generate small random rotation and offset
+    // small random rotation and offset
     function randomTransform() {
       const rotate = Math.random() * 10 - 5; // -5° to 5°
-      const x = Math.random() * 30 - 15; // -15px to 15px
+      const x = Math.random() * 30 - 15;     // -15px to 15px
       const y = Math.random() * 30 - 15;
       return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+    }
+
+    function updatePile() {
+      currentPile.forEach((img, i) => {
+        img.style.zIndex = i;
+        if (i === topIndex) {
+          img.style.opacity = '1';
+          img.style.transform = 'translate(0,0) rotate(0deg) scale(1.05)'; // top image lift
+        } else {
+          img.style.opacity = '0.85';
+          img.style.transform = img.dataset.origTransform; // preserve rotation/offset
+        }
+      });
     }
 
     // Open folder
@@ -69,10 +90,10 @@
       folder.addEventListener('click', () => {
         const key = folder.dataset.folder;
         viewer.innerHTML = ''; // clear previous pile
+
         currentPile = archive[key].map(src => {
           const img = document.createElement('img');
           img.src = src;
-          img.style.transform = randomTransform();
           img.style.position = 'absolute';
           img.style.top = '50%';
           img.style.left = '50%';
@@ -82,40 +103,35 @@
           img.style.maxHeight = '90vh';
           img.style.cursor = 'grab';
           img.style.opacity = '0.95';
+
+          const tf = randomTransform();
+          img.style.transform = tf;
+          img.dataset.origTransform = tf; // store original rotation/offset
+
           viewer.appendChild(img);
           return img;
         });
+
         topIndex = 0;
-        // bring top image to front
         updatePile();
         viewer.classList.add('active');
       });
     });
 
-    // Update z-index so top image is interactive
-    function updatePile() {
-      currentPile.forEach((img, i) => {
-        img.style.zIndex = i;
-        img.style.opacity = (i === topIndex) ? '1' : '0.85';
-        img.style.transform = (i === topIndex) ? 'translate(0,0) rotate(0deg)' : img.style.transform;
-      });
-    }
-
-    // Scroll wheel flips through photos
+    // Scroll wheel flips through images
     viewer.addEventListener('wheel', e => {
       if (!currentPile.length) return;
+
       if (e.deltaY > 0) {
-        // next image
         topIndex = (topIndex + 1) % currentPile.length;
       } else {
-        // previous image
         topIndex = (topIndex - 1 + currentPile.length) % currentPile.length;
       }
       updatePile();
       e.preventDefault();
     });
 
-    // Exit pile
+    // Exit viewer
     function closeViewer() {
       viewer.classList.remove('active');
       viewer.innerHTML = '';
@@ -129,4 +145,4 @@
   </script>
 
 </body>
-
+</html>
