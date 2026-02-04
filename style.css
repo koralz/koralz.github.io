@@ -30,3 +30,55 @@
 .folder:hover {
   transform: scale(1.1);
 }
+
+/* folders layout */
+.folders {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 4rem 2rem;
+}
+
+.folder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.folder img {
+  width: 80px;       /* folder icon size */
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.folder span {
+  color: #e4e1db;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* hover effect */
+.folder:hover {
+  transform: scale(1.1);
+}
+
+/* fullscreen viewer (pile) */
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,5,5,0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 900;
+}
+
+.viewer.active {
+  opacity: 1;
+  pointer-events: auto;
+}
